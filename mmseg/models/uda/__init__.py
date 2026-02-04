@@ -4,5 +4,8 @@
 # ---------------------------------------------------------------
 
 from mmseg.models.uda.dacs import DACS
+from .dacs_wavelet import DACSWithWavelet
 
-__all__ = ['DACS']
+__all__ = ['DACS', 'DACSWithWavelet']
+
+
