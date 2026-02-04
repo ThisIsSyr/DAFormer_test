@@ -20,6 +20,10 @@ _base_ = [
 seed = 0
 # Modifications to Basic UDA
 uda = dict(
+    # 用我们新写的 UDA 包装器
+    type='DACSWithWavelet',
+
+    # ------- 原来就有的 DACS 参数，保留不动 -------
     # Increased Alpha
     alpha=0.999,
     # Thing-Class Feature Distance
@@ -28,7 +32,20 @@ uda = dict(
     imnet_feature_dist_scale_min_ratio=0.75,
     # Pseudo-Label Crop
     pseudo_weight_ignore_top=15,
-    pseudo_weight_ignore_bottom=120)
+    pseudo_weight_ignore_bottom=120,
+
+    # ------- 新增：小波模块配置 -------
+    wavelet_cfg=dict(
+        in_channels=3,
+        kernel_size=5,
+        wt_levels=1,   # 先从 1 层开始，稳定了再往上加
+        wt_type='db1',
+    ),
+    # 是否对源域/目标域图像都做小波预处理
+    apply_to_source=True,
+    apply_to_target=True,
+)
+
 data = dict(
     train=dict(
         # Rare Class Sampling
